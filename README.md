@@ -1,0 +1,2 @@
+# py_template
+pythonのrepoを作成する時の汎用的なtemplate

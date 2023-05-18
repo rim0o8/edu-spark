@@ -1,0 +1,21 @@
+version: "3.0"
+
+services:
+  frontend:
+    build: ./frontend
+    environment:
+      - VITE_API_HOST=http://localhost:8080
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/frontend
+    command: sh -c 'yarn start'
+    depends_on:
+        - backend
+
+  backend:
+    build: ./api
+    ports:
+      - 8080:8080
+    volumes:
+      - ./app:/app
