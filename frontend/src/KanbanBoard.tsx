@@ -37,6 +37,7 @@ const initialColumns: Column[] = [
 
 const KanbanBoard: React.FC = () => {
     const [columns, setColumns] = useState(initialColumns);
+    const [newTaskContent, setNewTaskContent] = useState('');
 
     const handleTaskMove = (taskId: string, sourceColumnId: string, targetColumnId: string) => {
         let taskToMove: Task | null = null;
@@ -85,6 +86,19 @@ const KanbanBoard: React.FC = () => {
         });
 
         setColumns(newColumns);
+    };
+
+    const handleNewTaskInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setNewTaskContent(event.target.value);
+    };
+
+    const handleNewTaskSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+        if (newTaskContent.trim() !== '') {
+            handleTaskCreate('column-1', newTaskContent);
+        }
+        setNewTaskContent('');
     };
 
     const handleDragEnd = (result: DropResult) => {
@@ -149,6 +163,10 @@ const KanbanBoard: React.FC = () => {
                     </Droppable>
                 ))}
             </DragDropContext>
+            <form onSubmit={handleNewTaskSubmit}>
+                <input type="text" value={newTaskContent} onChange={handleNewTaskInputChange} placeholder="Enter a new task" />
+                <button type="submit">Add Task</button>
+            </form>
         </div>
     );
 };
