@@ -1,30 +1,56 @@
+import React, { useState, ChangeEvent, FormEvent } from 'react';
 import './App.css';
 import KanbanBoard from './KanbanBoard';
+import TextField from '@mui/material/TextField';
+
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 
 function App() {
+  const [inputValue, setInputValue] = useState('');
+  const [shouldRedirect, setShouldRedirect] = useState(false);
 
-  const columns = [
-    {
-      id: 1,
-      title: 'ToDo',
-      tasks: [
-        { id: 1, title: 'Task 1', description: 'Description 1' },
-        { id: 2, title: 'Task 2', description: 'Description 2' },
-      ],
-    },
-    {
-      id: 2,
-      title: 'In Progress',
-      tasks: [
-        { id: 3, title: 'Task 3', description: 'Description 3' },
-        { id: 4, title: 'Task 4', description: 'Description 4' },
-      ],
-    },
-    // Add more columns as needed
-  ];
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value);
+  };
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setShouldRedirect(true);
+  };
+
+  if (shouldRedirect) {
+    return <KanbanBoard />;
+  }
+
   return (
     <div className="App">
-      <KanbanBoard/>
+      <h1 className='gradient'>Project Kanban Board builder</h1>
+      <Box
+        component="form"
+        onSubmit={handleSubmit}
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: 2,
+          marginTop: '20px',
+        }}
+      >
+        <TextField
+          variant="outlined"
+          value={inputValue}
+          onChange={handleChange}
+          label="Enter your project summary"
+          fullWidth
+          sx={{
+            backgroundColor: '#fff',
+          }}
+        />
+        <Button variant="contained" type="submit" color="primary">
+          Build Kanban Board
+        </Button>
+      </Box>
     </div>
   );
 }
