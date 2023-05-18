@@ -142,7 +142,7 @@ const KanbanBoard: React.FC = () => {
                     <Droppable droppableId={column.id} key={column.id}>
                         {(provided) => (
                             <div ref={provided.innerRef} {...provided.droppableProps} className="column">
-                                <h2>{column.title}</h2>
+                                <h2 className="gradient">{column.title}</h2>
                                 {column.tasks.map((task, taskIndex) => (
                                     <Draggable key={task.id} draggableId={task.id} index={taskIndex}>
                                         {(provided) => (
